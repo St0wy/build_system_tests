@@ -1,5 +1,7 @@
 # Build script for testbed
 
+$sw = [Diagnostics.Stopwatch]::StartNew()
+
 $isRelease = $false
 
 # Check if we want to build in release and save it to a variable
@@ -38,3 +40,8 @@ if ($isRelease) {
 $cppFiles = $cppFilenames -join " "
 $buildCommand = "clang++ $cppFiles $compilerFlags -o ..\bin\$assembly.exe $defines $includeFlags $linkerFlags"
 Invoke-Expression $buildCommand
+
+$sw.Stop()
+$time = $sw.Elapsed
+
+Write-Host "Built $assembly in $time"

@@ -1,5 +1,7 @@
 # Build script for stowy physics engine
 
+$sw = [Diagnostics.Stopwatch]::StartNew()
+
 $isRelease = $false
 
 # Check if we want to build in release and save it to a variable
@@ -41,3 +43,8 @@ else {
 $cppFiles = $cppFilenames -join " "
 $buildCommand = "clang++ $cppFiles $compilerFlags -o ..\bin\$assembly.dll $defines $includeFlags $linkerFlags"
 Invoke-Expression $buildCommand
+
+$sw.Stop()
+$time = $sw.Elapsed
+
+Write-Host "Built $assembly in $time"
