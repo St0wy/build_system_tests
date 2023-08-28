@@ -16,6 +16,7 @@
 #include "CollisionBody.hpp"
 
 #include "dynamics/Solver.hpp"
+#include "defines.hpp"
 
 namespace stw
 {
@@ -24,7 +25,7 @@ namespace stw
 * It does not have dynamics, for this you will need the DynamicsWorld.
 * \see DynamicsWorld
 */
-class CollisionWorld
+class STWAPI CollisionWorld
 {
 public:
     CollisionWorld();

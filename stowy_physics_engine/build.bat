@@ -7,9 +7,9 @@ IF "%1" EQU "release" ( SET isRelease=release) else ( SET isRelease=)
 
 
 REM Get a list of all the .cpp files.
-SET cFilenames=
+SET cppFilenames=
 FOR /R %%f in (*.cpp) do (
-    SET cFilenames=!cFilenames! %%f
+    SET cppFilenames=!cppFilenames! %%f
 )
 
 SET assembly=stowy_physics_engine
@@ -22,9 +22,9 @@ IF DEFINED isRelease (
 )
 
 SET includeFlags=-Isrc
-SET linkerFlags=-luser32 -shared
+SET linkerFlags=-shared
 
-SET defines=
+SET defines=-DSTWEXPORT
 IF DEFINED isRelease ( 
     SET defines=!defines! -DNDEBUG
 ) else (
@@ -32,4 +32,4 @@ IF DEFINED isRelease (
 )
 
 IF DEFINED isRelease ( ECHO Building %assembly% in release...) else ( ECHO Building %assembly% in debug...)
-clang++ %cFilenames% %compilerFlags% -o ../bin/%assembly%.dll %defines% %includeFlags% %linkerFlags%
+clang++ %cppFilenames% %compilerFlags% -o ../bin/%assembly%.dll %defines% %includeFlags% %linkerFlags%

@@ -13,13 +13,14 @@
 #include <array>
 
 #include "math/Vector2.hpp"
+#include "defines.hpp"
 
 namespace stw
 {
 /**
 * \brief Struct representing the simplest form that can "select" an area in any dimension.
 */
-struct Simplex
+struct STWAPI Simplex
 {
 	/**
      * \brief The max size of this simplex.

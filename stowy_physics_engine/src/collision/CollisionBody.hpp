@@ -14,15 +14,16 @@
 
 #include "Collider.hpp"
 #include "Transform.hpp"
+#include "defines.hpp"
 
 namespace stw
 {
-struct Collision;
+struct STWAPI Collision;
 
 /**
  * \brief A body that can receive collisions.
  */
-class CollisionBody
+class STWAPI CollisionBody
 {
 public:
     CollisionBody();

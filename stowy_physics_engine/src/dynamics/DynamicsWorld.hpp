@@ -13,13 +13,14 @@
 #include "Rigidbody.hpp"
 
 #include "collision/CollisionWorld.hpp"
+#include "defines.hpp"
 
 namespace stw
 {
 /**
 * \brief A world with dynamics in it.
 */
-class DynamicsWorld : public CollisionWorld
+class STWAPI DynamicsWorld : public CollisionWorld
 {
 public:
     /**

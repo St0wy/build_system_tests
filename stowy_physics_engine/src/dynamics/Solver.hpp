@@ -13,6 +13,7 @@
 #include <vector>
 
 #include "collision/Collision.hpp"
+#include "defines.hpp"
 
 namespace stw
 {
@@ -20,7 +21,7 @@ namespace stw
 /**
 * \brief Generic class for all solvers.
 */
-class Solver
+class STWAPI Solver
 {
 public:
     Solver() = default;
@@ -41,7 +42,7 @@ public:
 /**
 * \brief Solver with impulse and friction.
 */
-class ImpulseSolver final : public Solver
+class STWAPI ImpulseSolver final : public Solver
 {
 public:
 	void Solve(const std::vector<Collision>& collisions, float deltaTime) override;
@@ -50,7 +51,7 @@ public:
 /**
 * \brief A solver to smooth out collision with collider that are in a tower placement.
 */
-class SmoothPositionSolver final : public Solver
+class STWAPI SmoothPositionSolver final : public Solver
 {
 public:
     void Solve(const std::vector<Collision>& collisions, float deltaTime) override;

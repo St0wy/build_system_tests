@@ -11,13 +11,14 @@
 #pragma once
 
 #include <string>
+#include "defines.hpp"
 
 namespace stw
 {
 /**
   * \brief A struct representing a 2D Vector.
   */
-struct Vector2
+struct STWAPI Vector2
 {
 	constexpr Vector2()
 		: Vector2(0, 0)

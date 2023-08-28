@@ -13,10 +13,11 @@
 #include <format>
 
 #include "math/Vector2.hpp"
+#include "defines.hpp"
 
 namespace stw
 {
-struct Manifold
+struct STWAPI Manifold
 {
 	Manifold(const Vector2& a, const Vector2& b, const Vector2& normal, float depth);
     Manifold(const Vector2& normal, float depth);

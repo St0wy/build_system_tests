@@ -11,13 +11,14 @@
 #pragma once
 
 #include "collision/CollisionBody.hpp"
+#include "defines.hpp"
 
 namespace stw
 {
 /**
 * \brief A Rigidbody that has dynamics.
 */
-struct Rigidbody : CollisionBody
+struct STWAPI Rigidbody : CollisionBody
 {
 	Rigidbody();
 

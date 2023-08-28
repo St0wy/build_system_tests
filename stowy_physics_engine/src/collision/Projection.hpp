@@ -10,9 +10,11 @@
  */
 #pragma once
 
+#include "defines.hpp"
+
 namespace stw
 {
-struct Projection
+struct STWAPI Projection
 {
     float min;
     float max;

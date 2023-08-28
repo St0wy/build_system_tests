@@ -1,10 +1,11 @@
 #pragma once
 
 #include "math/Vector2.hpp"
+#include "defines.hpp"
 
 namespace stw
 {
-struct Edge
+struct STWAPI Edge
 {
     Vector2 max;
     Vector2 p1;

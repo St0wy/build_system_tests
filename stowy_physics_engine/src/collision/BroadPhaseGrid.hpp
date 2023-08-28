@@ -13,6 +13,7 @@
 #include <vector>
 
 #include "CollisionBody.hpp"
+#include "defines.hpp"
 
 namespace stw
 {
@@ -23,7 +24,7 @@ namespace stw
 *
 * A collider that spans on multiple cells will have a pointer on every cell.
 */
-class BroadPhaseGrid
+class STWAPI BroadPhaseGrid
 {
 public:
     /**

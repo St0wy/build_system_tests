@@ -11,6 +11,7 @@
 #pragma once
 
 #include "math/Vector2.hpp"
+#include "defines.hpp"
 
 namespace stw
 {
@@ -18,7 +19,7 @@ namespace stw
 * \brief A transform of an object.
 * Contains position, scale and rotation.
 */
-struct Transform
+struct STWAPI Transform
 {
 public:
     /**

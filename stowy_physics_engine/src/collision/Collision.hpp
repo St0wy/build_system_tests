@@ -11,13 +11,14 @@
 #pragma once
 
 #include "CollisionBody.hpp"
+#include "defines.hpp"
 
 namespace stw
 {
 /**
 * \brief Struct representing a collision.
 */
-struct Collision
+struct STWAPI Collision
 {
     /**
      * \brief Body A of the collision.

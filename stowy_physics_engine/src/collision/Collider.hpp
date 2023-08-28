@@ -17,6 +17,7 @@
 #include "Transform.hpp"
 
 #include "math/Vector2.hpp"
+#include "defines.hpp"
 
 namespace stw
 {
@@ -27,7 +28,7 @@ class AabbCollider;
 /**
  * \brief A pure virtual struct that represents colliders.
  */
-class Collider
+class STWAPI Collider
 {
   public:
     Collider() = default;
@@ -148,7 +149,7 @@ class BoxCollider final : public Collider
 /**
  * \brief A circle collider.
  */
-class CircleCollider final : public Collider
+class STWAPI CircleCollider final : public Collider
 {
   public:
     /**
@@ -178,7 +179,7 @@ class CircleCollider final : public Collider
 /**
  * \brief An Axis Aligned Bounding Box collider.
  */
-class AabbCollider final : public Collider
+class STWAPI AabbCollider final : public Collider
 {
   public:
     /**

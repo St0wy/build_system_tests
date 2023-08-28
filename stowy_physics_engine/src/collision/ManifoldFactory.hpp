@@ -15,10 +15,11 @@
 #include "Manifold.hpp"
 #include "Simplex.hpp"
 #include "Transform.hpp"
+#include "defines.hpp"
 
 namespace stw
 {
-class CollisionBody;
+class STWAPI CollisionBody;
 
 /**
  * \brief Namespace containing all the methods to get manifolds from collisions.
@@ -36,7 +37,7 @@ namespace algo
  * \param tb Transform of the object B.
  * \return The manifold of the collisions between A and B.
  */
-Manifold FindCircleCircleManifold(
+STWAPI Manifold FindCircleCircleManifold(
 	const CircleCollider* a, const Transform* ta,
 	const CircleCollider* b, const Transform* tb);
 
@@ -48,7 +49,7 @@ Manifold FindCircleCircleManifold(
  * \param tb Transform of the object B.
  * \return The manifold of the collisions between A and B.
  */
-Manifold FindCircleBoxManifold(
+STWAPI Manifold FindCircleBoxManifold(
 	const CircleCollider* a, const Transform* ta,
 	const BoxCollider* b, const Transform* tb);
 
@@ -60,7 +61,7 @@ Manifold FindCircleBoxManifold(
  * \param tb Transform of the object B.
  * \return The manifold of the collisions between A and B.
  */
-Manifold FindBoxCircleManifold(
+STWAPI Manifold FindBoxCircleManifold(
 	const BoxCollider* a, const Transform* ta,
 	const CircleCollider* b, const Transform* tb);
 
@@ -72,7 +73,7 @@ Manifold FindBoxCircleManifold(
  * \param tb Transform of the object B.
  * \return The manifold of the collisions between A and B.
  */
-Manifold FindBoxBoxManifold(
+STWAPI Manifold FindBoxBoxManifold(
 	const BoxCollider* a, const Transform* ta,
 	const BoxCollider* b, const Transform* tb);
 
@@ -84,7 +85,7 @@ Manifold FindBoxBoxManifold(
  * \param tb Transform of the object B.
  * \return The manifold of the collisions between A and B.
  */
-Manifold FindAabbAabbManifold(
+STWAPI Manifold FindAabbAabbManifold(
 	const AabbCollider* a, const Transform* ta,
 	const AabbCollider* b, const Transform* tb);
 
@@ -96,7 +97,7 @@ Manifold FindAabbAabbManifold(
  * \param tb Transform of the object B.
  * \return The manifold of the collisions between A and B.
  */
-Manifold FindAabbCircleManifold(
+STWAPI Manifold FindAabbCircleManifold(
 	const AabbCollider* a, const Transform* ta,
 	const CircleCollider* b, const Transform* tb);
 
@@ -108,7 +109,7 @@ Manifold FindAabbCircleManifold(
  * \param tb Transform of the object B.
  * \return The manifold of the collisions between A and B.
  */
-Manifold FindCircleAabbManifold(
+STWAPI Manifold FindCircleAabbManifold(
 	const CircleCollider* a, const Transform* ta,
 	const AabbCollider* b, const Transform* tb);
 
@@ -121,7 +122,7 @@ Manifold FindCircleAabbManifold(
  * \param direction Direction in which to find the vector.
  * \return The vertex found by the support function.
  */
-Vector2 Support(
+STWAPI Vector2 Support(
 	const Collider* colliderA,
 	const Transform* transformA,
 	const Collider* colliderB,
@@ -137,7 +138,7 @@ Vector2 Support(
  * \param transformB Transform of object B.
  * \return Returns the manifold of the objects using the GJK algorithm.
  */
-Manifold Gjk(
+STWAPI Manifold Gjk(
 	const Collider* colliderA,
 	const Transform* transformA,
 	const Collider* colliderB,
@@ -150,14 +151,15 @@ Manifold Gjk(
  * \param direction Direction in which to find the next simplex.
  * \return True if we found the origin.
  */
-bool NextSimplex(const Simplex& points, Vector2& direction);
+STWAPI bool NextSimplex(const Simplex& points, Vector2& direction);
+
 /**
  * \brief Finds if both vectors are going in the same direction.
  * \param direction Direction vector.
  * \param ao Vector between a and the origin.
  * \return True if both of the vectors are going in the same direction.
  */
-bool SameDirection(Vector2 direction, Vector2 ao);
+STWAPI bool SameDirection(Vector2 direction, Vector2 ao);
 
 /**
  * \brief Line case for the NextSimplex function.
@@ -165,14 +167,15 @@ bool SameDirection(Vector2 direction, Vector2 ao);
  * \param direction Direction of the next point.
  * \return True if we found the origin.
  */
-bool Line(const Simplex& points, Vector2& direction);
+STWAPI bool Line(const Simplex& points, Vector2& direction);
+
 /**
  * \brief Triangle case for the NextSimplex function.
  * \param points Points of the Triangle simplex.
  * \param direction Direction of the next point.
  * \return True if we found the origin.
  */
-bool Triangle(const Simplex& points, Vector2& direction);
+STWAPI bool Triangle(const Simplex& points, Vector2& direction);
 
 /**
  * \brief Find the manifold from the last simplex of the GJK algorithm.
@@ -183,7 +186,7 @@ bool Triangle(const Simplex& points, Vector2& direction);
  * \param transformB Transform of object B.
  * \return The manifold found.
  */
-Manifold Epa(
+STWAPI Manifold Epa(
 	const Simplex& simplex,
 	const Collider* colliderA,
 	const Transform* transformA,
@@ -191,7 +194,7 @@ Manifold Epa(
 	const Transform* transformB
 );
 
-Manifold Sat(
+STWAPI Manifold Sat(
 	const BoxCollider* colliderA,
 	const Transform* transformA,
 	const BoxCollider* colliderB,
