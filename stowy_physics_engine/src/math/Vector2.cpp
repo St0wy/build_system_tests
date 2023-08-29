@@ -58,8 +58,10 @@ float Vector2::Dot(const Vector2& other) const
 
 float Vector2::Distance(const Vector2& other) const
 {
-    return std::sqrt((this->x - other.x) * (this->x - other.x) +
-        (this->y - other.y) * (this->y - other.y));
+    return std::sqrt(
+        (this->x - other.x) * (this->x - other.x) +
+        (this->y - other.y) * (this->y - other.y)
+    );
 }
 
 float Vector2::Angle(const Vector2& other) const

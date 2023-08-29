@@ -8,22 +8,12 @@ def main [input?: string] {
 
 	const assembly = 'testbed'
 
-	mut compilerFlags = [ '-std=c++20' ]
-	if $isRelease {
-		$compilerFlags | append '-O3'
-	} else {
-		$compilerFlags | append '-O3'
-	}
+	let compilerFlags = [ '-std=c++20' (if $isRelease { '-O3' } else { '-g3' })]
 
 	const includeFlags = ['-Isrc' '-I../stowy_physics_engine/src']
 	const linkerFlags = ['-L../bin/' '-lstowy_physics_engine']
 
-	mut defines: list<string> = []
-	if $isRelease {
-		$defines | append '-DNDEBUG'
-	} else {
-		$defines | append '-DDEBUG'
-	}
+	let defines = [(if $isRelease { '-DNDEBUG'} else { '-DDEBUG' })]
 
 	if $isRelease {
 		print $'Building ($assembly) in release...'

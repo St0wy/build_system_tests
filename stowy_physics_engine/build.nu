@@ -8,22 +8,12 @@ def main [input?: string] {
 
 	const assembly = 'stowy_physics_engine'
 
-	mut compilerFlags = [ '-std=c++20' ]
-	if $isRelease {
-		$compilerFlags | append '-O3'
-	} else {
-		$compilerFlags | append '-O3'
-	}
+	let compilerFlags = [ '-std=c++20' (if $isRelease { '-O3' } else { '-g3' })]
 
 	const includeFlags = ['-Isrc']
 	const linkerFlags = ['-shared']
 
-	mut defines = ['-DSTWEXPORT']
-	if $isRelease {
-		$defines | append '-DNDEBUG'
-	} else {
-		$defines | append '-DDEBUG'
-	}
+	let defines = ['-DSTWEXPORT' (if $isRelease { '-DNDEBUG'} else { '-DDEBUG' })]
 
 	if $isRelease {
 		print $'Building ($assembly) in release...'
