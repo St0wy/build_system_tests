@@ -31,6 +31,7 @@ def build [
 
 	let relativeCppFiles = ($cppFiles  | path relative-to $sourceDirectory | path parse)
 
+	print -n $'(ansi grey)'
 	# Build every .cpp to .o and get a list of every .o
 	let objectFiles = $relativeCppFiles | par-each {|relativeCppFile| (
 		# Convert from path object to string
@@ -53,6 +54,7 @@ def build [
 		};
 		$outputFileWithDir
 	)}
+	print -n $'(ansi reset)'
 
 	# Print building time
 	let endTime = date now

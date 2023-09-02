@@ -11,5 +11,5 @@ def main [buildType: string = 'debug'] {
 	const linkerFlags = ['-L../bin/' '-lstowy_physics_engine']
 	let defines = [(if $isRelease { '-DNDEBUG'} else { '-DDEBUG' })]
 
-	build testbed 'src/' '../bin/' $compilerFlags $includeFlags $linkerFlags $defines $buildType executable
+	build testbed 'src/' '../bin/' $compilerFlags $includeFlags $linkerFlags $defines $buildType executable clang++ sccache
 }

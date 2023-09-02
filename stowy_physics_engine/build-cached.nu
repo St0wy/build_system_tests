@@ -11,5 +11,5 @@ def main [buildType: string = 'debug'] {
 	const linkerFlags = ['-shared']
 	let defines = ['-DSTWEXPORT' (if $isRelease { '-DNDEBUG'} else { '-DDEBUG' })]
 
-	build stowy_physics_engine 'src/' '../bin/' $compilerFlags $includeFlags $linkerFlags $defines $buildType library
+	build stowy_physics_engine 'src/' '../bin/' $compilerFlags $includeFlags $linkerFlags $defines $buildType library clang++ sccache
 }
