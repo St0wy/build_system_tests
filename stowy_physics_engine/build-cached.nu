@@ -10,6 +10,6 @@ def main [buildType: string = 'debug'] {
 	const includeFlags = ['-Isrc']
 	const linkerFlags = ['-shared']
 	let defines = ['-DSTWEXPORT' (if $isRelease { '-DNDEBUG'} else { '-DDEBUG' })]
-	
+
 	build stowy_physics_engine 'src/' '../bin/' $compilerFlags $includeFlags $linkerFlags $defines $buildType library
 }

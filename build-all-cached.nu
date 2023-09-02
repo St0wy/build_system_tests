@@ -24,5 +24,5 @@ def main [input?: string] {
 
 	let endTime = date now
 	let totalTime = $endTime - $startTime
-	print $'All assemblies built successfully in ($totalTime).'
+	print $'(ansi green)All assemblies built successfully in ($totalTime).(ansi reset)'
 }

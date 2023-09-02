@@ -9,6 +9,8 @@ def build [
 	defines: list<string>,
 	buildType: string = 'debug', # The optimisation level of the build. Can be 'release' or 'debug'.
 	targetType: string = 'executable', # The type of target. Can be 'executable' or 'library'.
+	compiler: string = 'clang++'
+	cacheTool?: string
 ] {
 	let startTime = date now
 	let isRelease = $buildType == 'release'
@@ -21,7 +23,7 @@ def build [
 		return 'Invalid targetType'
 	}
 
-	let assemblyOutputFile = $'($binaryDirectory)/($assemblyName)($assemblyExtension)'
+	let assemblyOutputFile = ($'($binaryDirectory)/($assemblyName)($assemblyExtension)' | path split | path join)
 
 	print $'Building ($assemblyName) in ($buildType)...'
 
@@ -30,7 +32,7 @@ def build [
 	let relativeCppFiles = ($cppFiles  | path relative-to $sourceDirectory | path parse)
 
 	# Build every .cpp to .o and get a list of every .o
-	let objectFiles = $relativeCppFiles | each {|relativeCppFile| (
+	let objectFiles = $relativeCppFiles | par-each {|relativeCppFile| (
 		# Convert from path object to string
 		let inputFile = ($relativeCppFile | path join);
 		let outputFile = ($relativeCppFile | upsert extension 'o' | path join);
@@ -40,11 +42,15 @@ def build [
 		mkdir ($'($binaryDirectory)/($inputDirectory)');
 
 		# concatenate the .o file with the bin directory
-		let outputFileWithDir = $'($binaryDirectory)/($outputFile)'; # ex: ../bin/math/Vector2.o
-		let sourceFileWithDir = $'($sourceDirectory)/($inputFile)'; # ex: src/math/Vector2.cpp
+		let outputFileWithDir = ($'($binaryDirectory)/($outputFile)' | path split | path join);
+		let sourceFileWithDir = ($'($sourceDirectory)($inputFile)' | path split | path join);
 
 		print $'Building ($outputFileWithDir)...';
-		clang++ -c -o $outputFileWithDir $sourceFileWithDir $defines $includeFlags $compilerFlags;
+		if $cacheTool != null {
+			run-external --redirect-combine $cacheTool $compiler '-c' '-o' $outputFileWithDir $sourceFileWithDir $defines $includeFlags $compilerFlags;
+		} else {
+			run-external --redirect-combine $compiler '-c' '-o' $outputFileWithDir $sourceFileWithDir $defines $includeFlags $compilerFlags;
+		};
 		$outputFileWithDir
 	)}
 
@@ -56,7 +62,7 @@ def build [
 	let startTime = date now
 
 	print 'Linking...'
-	clang++ -o $assemblyOutputFile $objectFiles $linkerFlags $includeFlags $defines $compilerFlags
+	run-external --redirect-combine $compiler '-o' $assemblyOutputFile $objectFiles $linkerFlags $includeFlags $defines $compilerFlags
 
 	# Print link time and total time
 	let endTime = date now
@@ -64,5 +70,5 @@ def build [
 	print $'Linked in ($totalLinkTime)'
 	let totalTime = $totalBuildTime + $totalLinkTime
 	
-	print $'Built and linked ($assemblyName) in ($totalTime) successfully.'
+	print $'(ansi green)Built and linked ($assemblyName) in ($totalTime) successfully.(ansi reset)'
 }
