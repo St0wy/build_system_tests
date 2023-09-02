@@ -5,7 +5,7 @@ def main [input: string =  'debug'] {
 	mkdir bin
 
 	cd stowy_physics_engine
-	nu build-cached.nu $'($input)'
+	nu build-cached.nu $input
 
 	if $env.LAST_EXIT_CODE != 0 {
 		print Error : $env.LAST_EXIT_CODE
@@ -15,7 +15,7 @@ def main [input: string =  'debug'] {
 	cd ..
 
 	cd testbed
-	nu build-cached.nu $'($input)'
+	nu build-cached.nu $input
 
 	if $env.LAST_EXIT_CODE != 0 {
 		print Error : $env.LAST_EXIT_CODE

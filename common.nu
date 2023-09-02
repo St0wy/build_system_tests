@@ -16,9 +16,9 @@ def build [
 	let isRelease = $buildType == 'release'
 
 	let assemblyExtension = if $targetType == 'executable' {
-		if ($env.OS | str contains 'Windows') { '.exe' } else { '' }
+		if $nu.os-info.name == 'windows' { '.exe' } else { '' }
 	} else if $targetType == 'library' {
-		if ($env.OS | str contains 'Windows') { '.dll' } else { '.so' }
+		if $nu.os-info.name == 'windows' { '.dll' } else { '.so' }
 	} else {
 		return 'Invalid targetType'
 	}
@@ -46,11 +46,11 @@ def build [
 		let outputFileWithDir = ($'($binaryDirectory)/($outputFile)' | path split | path join);
 		let sourceFileWithDir = ($'($sourceDirectory)($inputFile)' | path split | path join);
 
-		print $'Building ($outputFileWithDir)...';
+		print $'Building ($relativeCppFile | get stem)...';
 		if $cacheTool != null {
-			run-external --redirect-combine $cacheTool $compiler '-c' '-o' $outputFileWithDir $sourceFileWithDir $defines $includeFlags $compilerFlags;
+			print --no-newline (run-external --redirect-combine $cacheTool $compiler '-c' '-o' $outputFileWithDir $sourceFileWithDir $defines $includeFlags $compilerFlags);
 		} else {
-			run-external --redirect-combine $compiler '-c' '-o' $outputFileWithDir $sourceFileWithDir $defines $includeFlags $compilerFlags;
+			print --no-newline (run-external --redirect-combine $compiler '-c' '-o' $outputFileWithDir $sourceFileWithDir $defines $includeFlags $compilerFlags);
 		};
 		$outputFileWithDir
 	)}
@@ -64,7 +64,7 @@ def build [
 	let startTime = date now
 
 	print 'Linking...'
-	run-external --redirect-combine $compiler '-o' $assemblyOutputFile $objectFiles $linkerFlags $includeFlags $defines $compilerFlags
+	print --no-newline (run-external --redirect-combine $compiler '-o' $assemblyOutputFile $objectFiles $linkerFlags $includeFlags $defines $compilerFlags)
 
 	# Print link time and total time
 	let endTime = date now
