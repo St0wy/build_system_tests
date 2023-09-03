@@ -14,6 +14,8 @@ def build [
 ] {
 	let startTime = date now
 	let isRelease = $buildType == 'release'
+	# We need to split the compiler to handle cases such as "zig c++" because run-external doesn't like spaces
+	let splitCompiler = ($compiler | split row ' ')
 
 	let assemblyExtension = if $targetType == 'executable' {
 		if $nu.os-info.name == 'windows' { '.exe' } else { '' }
@@ -45,13 +47,15 @@ def build [
 		# concatenate the .o file with the bin directory
 		let outputFileWithDir = ($'($binaryDirectory)/($outputFile)' | path split | path join);
 		let sourceFileWithDir = ($'($sourceDirectory)($inputFile)' | path split | path join);
-
+		
 		print $'Building ($relativeCppFile | get stem)...';
+		
 		if $cacheTool != null {
 			print --no-newline (run-external --redirect-combine $cacheTool $compiler '-c' '-o' $outputFileWithDir $sourceFileWithDir $defines $includeFlags $compilerFlags);
 		} else {
-			print --no-newline (run-external --redirect-combine $compiler '-c' '-o' $outputFileWithDir $sourceFileWithDir $defines $includeFlags $compilerFlags);
+			print --no-newline (run-external --redirect-combine $splitCompiler.0 ($splitCompiler | range 1..) '-c' '-o' $outputFileWithDir $sourceFileWithDir $defines $includeFlags $compilerFlags);
 		};
+
 		$outputFileWithDir
 	)}
 	print -n $'(ansi reset)'
@@ -64,7 +68,7 @@ def build [
 	let startTime = date now
 
 	print 'Linking...'
-	print --no-newline (run-external --redirect-combine $compiler '-o' $assemblyOutputFile $objectFiles $linkerFlags $includeFlags $defines $compilerFlags)
+	print --no-newline (run-external --redirect-combine $splitCompiler.0 ($splitCompiler | range 1..) '-o' $assemblyOutputFile $objectFiles $linkerFlags $includeFlags $defines $compilerFlags)
 
 	# Print link time and total time
 	let endTime = date now
