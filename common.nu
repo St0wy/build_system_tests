@@ -15,17 +15,30 @@ def build [
 	let startTime = date now
 	let isRelease = $buildType == 'release'
 	# We need to split the compiler to handle cases such as "zig c++" because run-external doesn't like spaces
-	let splitCompiler = ($compiler | split row ' ')
+	let splitCompiler = ($compiler | split row ' ') 
 
-	let assemblyExtension = if $targetType == 'executable' {
-		if $nu.os-info.name == 'windows' { '.exe' } else { '' }
+	let assemblyOutputFile = if $targetType == 'executable' {
+		if $nu.os-info.name == 'windows' { 
+			$'($binaryDirectory)/($assemblyName).exe'
+		} else { 
+			$'($binaryDirectory)/($assemblyName)'
+		}
 	} else if $targetType == 'library' {
-		if $nu.os-info.name == 'windows' { '.dll' } else { '.so' }
+		if $nu.os-info.name == 'windows' { 
+			$'($binaryDirectory)/($assemblyName).dll'
+		} else { 
+			$'($binaryDirectory)/lib($assemblyName).so'
+		}
 	} else {
-		return 'Invalid targetType'
+		exit 2
 	}
-
-	let assemblyOutputFile = ($'($binaryDirectory)/($assemblyName)($assemblyExtension)' | path split | path join)
+	let assemblyOutputFile = $assemblyOutputFile  | path split | path join
+	
+	
+	if $nu.os-info.name == 'windows' {
+		
+	} else {
+	}
 
 	print $'Building ($assemblyName) in ($buildType)...'
 

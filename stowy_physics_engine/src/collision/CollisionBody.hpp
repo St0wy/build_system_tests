@@ -11,6 +11,7 @@
 #pragma once
 
 #include <functional>
+#include <cstdint>
 
 #include "Collider.hpp"
 #include "Transform.hpp"

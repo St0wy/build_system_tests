@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <ranges>
+#include <cmath>
 
 namespace stw
 {

@@ -1,5 +1,7 @@
 #include "dynamics/Rigidbody.hpp"
 
+#include <cmath>
+
 namespace stw
 {
 Rigidbody::Rigidbody()
