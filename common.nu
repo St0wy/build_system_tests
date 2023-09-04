@@ -51,9 +51,15 @@ def build [
 		print $'Building ($relativeCppFile | get stem)...';
 		
 		if $cacheTool != null {
-			print --no-newline (run-external --redirect-combine $cacheTool $compiler '-c' '-o' $outputFileWithDir $sourceFileWithDir $defines $includeFlags $compilerFlags);
+			run-external $cacheTool $compiler '-c' '-o' $outputFileWithDir $sourceFileWithDir $defines $includeFlags $compilerFlags
 		} else {
-			print --no-newline (run-external --redirect-combine $splitCompiler.0 ($splitCompiler | range 1..) '-c' '-o' $outputFileWithDir $sourceFileWithDir $defines $includeFlags $compilerFlags);
+			run-external $splitCompiler.0 ($splitCompiler | range 1..) '-c' '-o' $outputFileWithDir $sourceFileWithDir $defines $includeFlags $compilerFlags
+		};
+		let clangExitCode = $env.LAST_EXIT_CODE;
+
+		if $clangExitCode != 0 {
+			print $'(ansi red)Failed to build ($relativeCppFile | get stem)(ansi reset)'
+			exit $clangExitCode
 		};
 
 		$outputFileWithDir
@@ -68,7 +74,13 @@ def build [
 	let startTime = date now
 
 	print 'Linking...'
-	print --no-newline (run-external --redirect-combine $splitCompiler.0 ($splitCompiler | range 1..) '-o' $assemblyOutputFile $objectFiles $linkerFlags $includeFlags $defines $compilerFlags)
+	run-external $splitCompiler.0 ($splitCompiler | range 1..) '-o' $assemblyOutputFile $objectFiles $linkerFlags $includeFlags $defines $compilerFlags
+
+	let clangExitCode = $env.LAST_EXIT_CODE;
+	if $clangExitCode != 0 {
+		print $'(ansi red)Failed to link ($assemblyName)(ansi reset)'
+		exit $clangExitCode
+	};
 
 	# Print link time and total time
 	let endTime = date now

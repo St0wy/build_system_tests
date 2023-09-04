@@ -7,9 +7,10 @@ def main [input: string =  'debug'] {
 	cd stowy_physics_engine
 	nu build-cached.nu $input
 
-	if $env.LAST_EXIT_CODE != 0 {
-		print Error : $env.LAST_EXIT_CODE
-		return $env.LAST_EXIT_CODE
+	let libBuildCode = $env.LAST_EXIT_CODE
+	if $libBuildCode != 0 {
+		print Error : $libBuildCode
+		exit $libBuildCode
 	}
 
 	cd ..
@@ -17,9 +18,10 @@ def main [input: string =  'debug'] {
 	cd testbed
 	nu build-cached.nu $input
 
-	if $env.LAST_EXIT_CODE != 0 {
-		print Error : $env.LAST_EXIT_CODE
-		return $env.LAST_EXIT_CODE
+	let testbedBuildCode = $env.LAST_EXIT_CODE
+	if $testbedBuildCode != 0 {
+		print Error : $testbedBuildCode
+		exit $testbedBuildCode
 	}
 
 	let endTime = date now
