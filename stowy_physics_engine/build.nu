@@ -2,9 +2,9 @@
 
 def main [input?: string] {
 	let start = date now
-	let isRelease = $input == 'release';
+	let isRelease = $input == 'release'
 
-	let cppFiles = glob **/*.cpp;
+	let cppFiles = glob **/*.cpp
 
 	const assembly = 'stowy_physics_engine'
 

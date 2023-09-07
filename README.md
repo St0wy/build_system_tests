@@ -9,5 +9,6 @@ Theses are the systems you can find :
 - [Nushell (simple)](./testbed/build.nu)
 - [Nushell (improved)](./common.nu)
 - [build.zig](./build.zig)
+- [CMake](./testbed/CMakeLists.txt)
 
 (I know that a script is not really a build system, but it's easier to use this word)
