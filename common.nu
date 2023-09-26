@@ -33,12 +33,6 @@ def build [
 		exit 2
 	}
 	let assemblyOutputFile = $assemblyOutputFile  | path split | path join
-	
-	
-	if $nu.os-info.name == 'windows' {
-		
-	} else {
-	}
 
 	print $'Building ($assemblyName) in ($buildType)...'
 
